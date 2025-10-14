@@ -1,0 +1,227 @@
+Loaded 5 Python problems
+
+=== Problem Python/0 ===
+Buggy code:
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)
+    False
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+    """
+
+---------------
+D:\Pjatk\PetProjects\DataScience\ReAct\agent\ReActAgent.py:133: LangChainDeprecationWarning: The method `BaseTool.__call__` was deprecated in langchain-core 0.1.47 and will be removed in 1.0. Use :meth:`~invoke` instead.
+  observation = tool_callable(action_input)
+Fixed code:
+from typing import List
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """Check if in given list of numbers, any two numbers are closer to each other than
+    the given threshold.
+
+    Args:
+        numbers: List of floats
+        threshold: Threshold for closeness
+
+    Returns:
+        True if any two numbers are closer than the threshold, False otherwise
+
+    Example:
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+
+    Requirements:
+    - List must not be empty
+    - Threshold must be positive
+
+    """
+    for i in range(len(numbers) - 1):
+        for j in range(i + 1, len(numbers)):
+            if abs(numbers[i] - numbers[j]) < threshold:
+                return True
+    return False
+
+# Test cases
+assert has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3) == True
+assert has_close_elements([1.0, 2.0, 3.0], 0.5) == False
+---------------
+✅ Passed Python/0
+
+=== Problem Python/1 ===
+Buggy code:
+from typing import List
+
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
+    separate those group into separate strings and return the list of those.
+    Separate groups are balanced (each open brace is properly closed) and not nested within each other
+    Ignore any spaces in the input string.
+    >>> separate_paren_groups('( ) (( )) (( )( ))')
+    ['()', '(())', '(()())']
+    """
+
+---------------
+Fixed code:
+from typing import List
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to separate those group into separate strings and return the list of those.
+
+    Args:
+        paren_string: A string containing multiple groups of nested parentheses.
+
+    Returns:
+        List[str]: A list of balanced, non-nested group strings.
+
+    Example:
+        >>> separate_paren_groups('( ) (( )) (( )( ))')
+        ['()', '(())', '(()())']
+    """
+    # Remove spaces from the input string
+    paren_string = paren_string.replace(' ', '')
+    result = []
+    stack = []
+
+    for char in paren_string:
+        if char == '(':
+            stack.append(char)
+        elif char == ')':
+            if stack and stack[-1] == '(':
+                result.append(''.join(stack))
+                stack.pop()
+            else:
+                # Invalid input, but we assume the input is valid for this function
+                pass
+
+    return result
+
+# Example usage
+if __name__ == "__main__":
+    print(separate_paren_groups('( ) (( )) (( )( ))'))
+---------------
+Test failed:
+❌ Failed Python/1
+
+=== Problem Python/2 ===
+Buggy code:
+
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+---------------
+Traceback (most recent call last):
+  File "D:\Pjatk\PetProjects\DataScience\ReAct\agent\main.py", line 37, in target
+    exec(test_str, env)
+AssertionError
+Fixed code:
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+
+    """
+    if not isinstance(number, float):
+        raise ValueError("Input must be a float")
+
+    # Extract the integer part
+    integer_part = int(number)
+    decimal_part = number - integer_part
+
+    return decimal_part
+
+# Test cases
+if __name__ == "__main__":
+    assert truncate_number(3.5) == 0.5, "Test for 3.5 should return 0.5"
+    assert truncate_number(1.0) == 0.0, "Test for 1.0 should return 0.0"
+---------------
+✅ Passed Python/2
+
+=== Problem Python/3 ===
+Buggy code:
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """ You're given a list of deposit and withdrawal operations on a bank account that starts with
+    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and
+    at that point function should return True. Otherwise it should return False.
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+    True
+    """
+
+---------------
+Fixed code:
+from typing import List
+
+def below_zero(operations: List[int]) -> bool:
+    """You're given a list of deposit and withdrawal operations on a bank account that starts with zero balance. Your task is to detect if at any point the balance of account falls below zero, and at that point function should return True. Otherwise it should return False."""
+
+    balance = 0
+    for op in operations:
+        balance += op
+        if balance < 0:
+            return True
+    return False
+---------------
+✅ Passed Python/3
+
+=== Problem Python/4 ===
+Buggy code:
+from typing import List
+
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+
+---------------
+Fixed code:
+from typing import List
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+    if not numbers:
+        return 0.0
+    mean = sum(numbers) / len(numbers)
+    mad = sum(abs(x - mean) for x in numbers) / len(numbers)
+    return mad
+---------------
+✅ Passed Python/4
+
+=== Results ===
+Total: 18, Passed: 11, pass@1 = 0.611
+
+Process finished with exit code 0
