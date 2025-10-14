@@ -1,0 +1,13 @@
+langchain==0.3.27
+langchain-core==0.3.79
+langchain-ollama==0.3.10
+langchain-text-splitters==0.3.11
+langgraph==0.6.10
+langgraph-checkpoint==2.1.2
+langgraph-prebuilt==0.6.4
+langgraph-sdk==0.2.9
+langsmith==0.4.34
+numpy==2.3.3
+ollama==0.6.0
+torch==2.7.1+cu118
+transformers==4.57.0
