@@ -3,7 +3,7 @@ import os
 import threading
 import traceback
 
-from agent.CodeAgent import get_fixed_code
+from agent.workflow import get_fixed_code
 
 
 def load_human_eval_problems(path):
@@ -64,7 +64,7 @@ def get_fixed_code_with_timeout(buggy_code: str, timeout=15) -> str:
         try:
             result["fixed_code"] = get_fixed_code(source_code=buggy_code)
         except Exception as e:
-            print(f"Error in get_fixed_code: {e}")
+            print(f"Error in get_fixed_code: {e.with_traceback(e.__traceback__)}")
 
     thread = threading.Thread(target=target)
     thread.start()
@@ -77,19 +77,19 @@ def get_fixed_code_with_timeout(buggy_code: str, timeout=15) -> str:
 
     return result["fixed_code"]
 
+def main():
 
-if __name__ == "__main__":
     human_eval_path = "..\\data\\humaneval.jsonl"
     problems = load_human_eval_problems(human_eval_path)
-    problems = problems[33:40]
+    problems = problems[0:20]
 
     print(f"Loaded {len(problems)} Python problems")
 
     # total = len(problems)
     # passed = 0
 
-    total = len(problems)+13
-    passed = 7
+    total = len(problems)
+    passed = 0
 
     for i, problem in enumerate(problems):
         print(f"\n=== Problem {problem['task_id']} ===")
@@ -119,6 +119,11 @@ if __name__ == "__main__":
     pass_at_1 = passed / total
     print(f"\n=== Results ===")
     print(f"Total: {total}, Passed: {passed}, pass@1 = {pass_at_1:.3f}")
+
+
+# if __name__ == "__main__":
+    # main()
+
 
     # buggy_code_str = """
     # def tricky_function(lst):

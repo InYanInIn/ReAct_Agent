@@ -70,6 +70,7 @@ def output_post_processing(text: str, max_len: int = 4000) -> str:
 
     return cleaned.strip()
 
+
 def save_history_to_logs(path: str, history):
     # print(type(history))
     if isinstance(history, list):

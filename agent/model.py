@@ -1,7 +1,7 @@
 from langchain_ollama import OllamaLLM
 
 def get_model():
-    return OllamaLLM(model="qwen3:0.6b")
+    return OllamaLLM(model="qwen3:0.6b", base_url="http://localhost:11434")
 
 # All the code below is for running on GPU
 # However, Qwen3-0.6B is a small enough model to run on CPU with Ollama

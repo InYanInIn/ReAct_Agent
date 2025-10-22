@@ -1,4 +1,4 @@
-from agent.CodeAgent import get_fixed_code
+from agent.workflow import get_fixed_code
 
 def read_multiline_input(prompt="Enter your code snippet (end with empty line):"):
     print(prompt)
